@@ -15,9 +15,7 @@ const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
-const gamePopUp = document.querySelector('.pop-up');
-const gamePopUpMsg = document.querySelector('.pop-up__message');
-const gamePopUpRetry = document.querySelector('.pop-up__retry');
+
 
 const gameWinSound = new Audio('/sound/game_win.mp3');
 const bugPullSound = new Audio('/sound/bug_pull.mp3');
