@@ -1,5 +1,7 @@
 'use strict'
 
+import PopUp from './popup.js' 
+
 /**
  * 1. 이미지를 넣을 section의 정보를 가져온다.
  * 2. addItem 함수 만들고..
@@ -10,8 +12,6 @@ const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
 const GAME_DURATION_SEC = 5;
 
-const field = document.querySelector('.game__field');
-const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.game__timer');
 const gameScore = document.querySelector('.game__score');
@@ -27,6 +27,12 @@ let gameStat = false;
 let score = 0;
 let timer = undefined;
 
+const gameFinishBanner = new PopUp();
+gameFinishBanner.setClickListener(() => {
+  startGame();
+});
+
+
 // button event handling
 gameBtn.addEventListener('click', () => {
   if(gameStat) {
@@ -36,11 +42,11 @@ gameBtn.addEventListener('click', () => {
   }
 });
 
-gamePopUpRetry.addEventListener('click', ()=> {
-  reset();
-  startGame();
-  visibleGameBtn();
-});
+// gamePopUpRetry.addEventListener('click', ()=> {
+//   reset();
+//   startGame();
+//   // visibleGameBtn();
+// });
 
 field.addEventListener('click', (event)=> {
   onFieldClick(event);
@@ -49,6 +55,7 @@ field.addEventListener('click', (event)=> {
 
 function startGame() {
   gameStat = true;
+  score = 0;
   playSound(bgSound);
   initGame();
   showStopIcon();
@@ -61,7 +68,8 @@ function stopGame() {
   showStartIcon();
   stopGameTimer();
   invisibleGameBtn();
-  showPopUpBtn('Retry ^_^?');
+  gameFinishBanner.showWithText('Retry ^_^?');
+  //showPopUpBtn('Retry ^_^?');
 }
 
 function showStopIcon() {
@@ -114,10 +122,7 @@ function visibleGameBtn() {
 
 }
 
-function showPopUpBtn(text) {
-  gamePopUp.classList.remove('pop-up--hide');
-  gamePopUpMsg.innerText = `${text}`;
-}
+
 
 function initGame() {
   field.innerHTML = ''; 
@@ -175,7 +180,8 @@ function pauseSound(sound) {
 
 function finishGame(win) {
   invisibleGameBtn();
-  showPopUpBtn(win ? 'YOU WIN ^__^' : 'YOU LOSE ㅠ_ㅠ' );
+  gameFinishBanner.showWithText(win ? 'YOU WIN ^__^' : 'YOU LOSE ㅠ_ㅠ');
+  // showPopUpBtn(win ? 'YOU WIN ^__^' : 'YOU LOSE ㅠ_ㅠ' );
   if(win) {
     playSound(gameWinSound);
   } else {
