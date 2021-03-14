@@ -11,6 +11,7 @@ export default class PopUp {
     });
   }
   // onClick으로 함수의 참조값을 받아와서 멤버변수 this.onClick에 저장
+  // start() 함수를  PopUp class에서 선언할수 없으니 이렇게 가져와서 사용
   setClickListener(onClick) {
     this.onClick = onClick;
   }
